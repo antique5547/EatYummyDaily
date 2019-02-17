@@ -5,13 +5,18 @@ import classes from "./Burger.css";
 
 class Burger extends Component {
   render() {
-    let transformedIngredients = Object.keys(this.props.ingredients).map(
-      ingKey => {
+    let transformedIngredients = Object.keys(this.props.ingredients)
+      .map(ingKey => {
         return [...Array(this.props.ingredients[ingKey])].map((_, index) => {
           return <BurgerIngredient type={ingKey} key={ingKey + index} />;
         });
-      }
-    );
+      })
+      .reduce((arr, ele) => {
+        return arr.concat(ele);
+      });
+    if (transformedIngredients.length == 0) {
+      transformedIngredients = <div>Please start adding ingredients!</div>;
+    }
     return (
       <Aux>
         <div className={classes.Burger}>
